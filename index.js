@@ -1,13 +1,9 @@
-const koa = require('koa')
-const app = koa()
-const getTemperature = require('./getTemperature')
+const config = require('./config')
+// const server = require('./server')
+const measurement = require('./measurement')
+const log = require('./log')('root')
 
-app.use(function *() {
-  const temperature = yield getTemperature()
-  this.body = `temperature: ${temperature}`
-})
+log.info({ config }, 'Booting app')
 
-app.listen(8080, () => {
-  console.log('Server started')
-})
-
+// server.listen(config.port, () => log.info({ port: config.port }, 'Server started!'))
+measurement.start(config.measurementInterval)
