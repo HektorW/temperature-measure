@@ -10,6 +10,7 @@ module.exports = {
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "generator-star-spacing": ["error", "after"],
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "require-yield": 0,
   }
 };
