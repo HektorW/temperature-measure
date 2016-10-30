@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start:dev": "cross-env MOCK_SENSOR=true NODE_ENV=development nodemon index.js | bunyan -o short"
+    "start:dev": "cross-env MOCK_SENSOR=true NODE_ENV=development nodemon --ignore client/ index.js | bunyan -o short"
   },
   "devDependencies": {
     "cross-env": "^3.1.3",
