@@ -6,7 +6,10 @@ function* getTemperature() {
   const { query } = this
   const count = query.count || 1
   const start = query.start || 0
-  this.body = yield read(count, start)
+  const entries = yield read(count, start)
+  this.body = entries.map(
+    ({ time, temperature, location }) => ({ time, temperature, location })
+  )
 }
 
 function* noFlowThrough(next) {
