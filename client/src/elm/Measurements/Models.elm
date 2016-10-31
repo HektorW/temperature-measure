@@ -1,10 +1,11 @@
 module Measurements.Models exposing (..)
 
 import Http
+import Date exposing (Date)
 
 type alias Measurement =
   { temperature : Float
-  , time : String
+  , time : Date
   , location : String
   }
 

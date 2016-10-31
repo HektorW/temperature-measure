@@ -5,7 +5,8 @@ import Measurements.Models exposing (..)
 
 import Http
 import Task
-import Json.Decode as Decode exposing ((:=))
+import Date exposing (Date, fromString)
+import Json.Decode as Decode exposing ((:=), andThen)
 
 
 fetchLatest : Cmd Msg
@@ -29,5 +30,9 @@ measurementDecoder : Decode.Decoder Measurement
 measurementDecoder =
   Decode.object3 Measurement
     ("temperature" := Decode.float)
-    ("time" := Decode.string)
+    ("time" := dateDecoder)
     ("location" := Decode.string)
+
+
+dateDecoder : Decode.Decoder Date
+dateDecoder = Decode.customDecoder Decode.string Date.fromString

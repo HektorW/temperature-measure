@@ -3,17 +3,20 @@ module View exposing (..)
 import Measurements.Models exposing (Measurement, MeasurementsModel)
 import Models exposing (..)
 import Messages exposing (..)
+import Graph
 
 import Http
 import Http
 import Html exposing (..)
-
+import Date.Extra.Config.Config_en_gb exposing (config)
+import Date.Extra.Format exposing (format)
 
 view : Model -> Html Msg
 view model =
   main' []
     [ h1 [] [ text "Temperature measurements" ]
     , renderMeasurements model.measurementsModel
+    , Graph.render 400 200 ( List.map ( \measurement -> measurement.temperature ) model.measurementsModel.measurements )
     ]
 
 
@@ -62,5 +65,7 @@ renderRow : Measurement -> Html Msg
 renderRow measurement =
   li []
     [ span [] [ text ( "Temperature: " ++ ( toString measurement.temperature ) ++ "°C" ) ]
-    , span [] [ text ( ", Timestamp: " ++ measurement.time ) ]
+    , span [] [ text ( ", Timestamp: " ++ ( format config "%b %-d, %H:%M" measurement.time ) ) ]
     ]
+
+
