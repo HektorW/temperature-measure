@@ -1,3 +1,4 @@
+require('./css/main.css')
 require('./index.html')
 const Elm = require('./elm/Main.elm')
 

@@ -19,7 +19,11 @@ module.exports = {
       test: /\.html$/,
       exclude: /node_modules/,
       loader: 'file?name=[name].[ext]',
-    },{
+    }, {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      loader: 'style!css',
+    }, {
       test: /\.elm$/,
       exclude: [/elm-stuff/, /node_modules/],
       loader: 'elm-webpack?pathToMake=node_modules/.bin/elm-make',

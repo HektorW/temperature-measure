@@ -14,7 +14,7 @@ type alias Y = Float
 
 render : Width -> Height -> Values -> Svg a
 render graphWidth graphHeight values =
-  svg [ width ( toString graphWidth ), height ( toString graphHeight ) ]
+  svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
     [ Svg.path
         [ strokeWidth "1"
         , stroke "#000"
