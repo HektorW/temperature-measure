@@ -17,7 +17,6 @@ render graphWidth graphHeight values =
   svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
     [ Svg.path
         [ strokeWidth "1"
-        , stroke "#000"
         , fill "none"
         , d ( getPath values graphWidth graphHeight )
         ]

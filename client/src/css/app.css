@@ -1,0 +1,40 @@
+[class^='app-'] {
+  font-family: 'Lato', sans-serif;
+  min-height: 100vh;
+  transition: background-color .3s, color .3s;
+}
+
+[class^='app-'] svg {
+  transition: stroke .3s;
+}
+
+header {
+  background-color: #ff5252;
+}
+
+.app-light {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.app-light .style {
+  background-color: #333;
+}
+
+.app-light svg {
+  stroke: #333;
+}
+
+
+.app-dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.app-dark .style {
+  background-color: #f4f4f4;
+}
+
+.app-dark svg {
+  stroke: #fff;
+}

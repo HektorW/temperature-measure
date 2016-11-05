@@ -1,6 +1,9 @@
 module View exposing (..)
 
 import Measurements.Models exposing (Measurement, MeasurementsModel)
+import Measurements.View
+import Style.Models exposing (..)
+import Style.View
 import Models exposing (..)
 import Messages exposing (..)
 import Graph
@@ -8,16 +11,32 @@ import Graph
 import Http
 import Http
 import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.App
 import Date.Extra.Config.Config_en_gb exposing (config)
 import Date.Extra.Format exposing (format)
 
 view : Model -> Html Msg
 view model =
-  main' []
-    [ h1 [] [ text "Temperature measurements" ]
-    , renderMeasurements model.measurementsModel
-    , Graph.render 400 200 ( List.map ( \measurement -> measurement.temperature ) model.measurementsModel.measurements )
+  div [ class ( styleClass model.styleModel.style ) ]
+    [ header []
+        [ Html.App.map StyleMsg ( Style.View.view model.styleModel )
+        , h1 [] [ text "Temperature" ]
+        ]
+    , main' []
+        [ Html.App.map MeasurementsMsg ( Measurements.View.view model.measurementsModel )
+        , Graph.render 400 200 ( List.map ( \measurement -> measurement.temperature ) model.measurementsModel.measurements )
+        ]
     ]
+
+
+styleClass : Style -> String
+styleClass style =
+  case style of
+    Light ->
+      "app-light"
+    Dark ->
+      "app-dark"
 
 
 renderMeasurements : MeasurementsModel -> Html Msg

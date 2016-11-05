@@ -3,8 +3,11 @@ module Measurements.Models exposing (..)
 import Http
 import Date exposing (Date)
 
+type alias Location = String
+type alias Temperature = Float
+
 type alias Measurement =
-  { temperature : Float
+  { temperature : Temperature
   , time : Date
   , location : String
   }

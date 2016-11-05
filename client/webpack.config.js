@@ -1,6 +1,10 @@
 const { join } = require('path')
+const OfflinePlugin = require('offline-plugin')
 
-module.exports = {
+const DEVELOPMENT = process.env.NODE_ENV === 'development'
+const PRODUCTION = process.env.NODE_ENV === 'production'
+
+const config = {
   entry: join(__dirname, 'src/index.js'),
 
   output: {
@@ -30,7 +34,11 @@ module.exports = {
     }],
   },
 
-  devServer: {
+  plugins: [],
+}
+
+if (DEVELOPMENT) {
+  config.devServer = {
     inline: true,
     proxy: {
       '/api': {
@@ -38,5 +46,11 @@ module.exports = {
         secure: false,
       },
     },
-  },
+  }
 }
+
+if (PRODUCTION) {
+  config.plugins.push(new OfflinePlugin())
+}
+
+module.exports = config
