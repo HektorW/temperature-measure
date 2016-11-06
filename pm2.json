@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "temperature",
+    "name": "temperature-measure",
     "script": "./index.js",
     "watch": false,
     "autorestart": true,
