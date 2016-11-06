@@ -1,0 +1,32 @@
+.graph svg {
+  max-height: 300px;
+}
+
+.graph .line {
+  font-size: 12px;
+  opacity: .5;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.graph .line:after,
+.graph .line:before {
+  border-top: 1px solid;
+  border-color: inherit;
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+}
+
+.graph .line:after {
+  margin-left: 2em;
+  left: 50%;
+}
+
+.graph .line:before {
+  margin-right: 2em;
+  right: 50%;
+}

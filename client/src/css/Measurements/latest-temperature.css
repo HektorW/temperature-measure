@@ -1,4 +1,11 @@
 .latest-temperature {
   font-size: 10em;
+  margin-bottom: .4em;
   text-align: center;
+}
+
+.latest-temperature .date {
+  display: block;
+  font-size: 10px;
+  opacity: .8;
 }

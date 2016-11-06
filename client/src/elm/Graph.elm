@@ -1,5 +1,6 @@
 module Graph exposing (render)
 
+import Html exposing (div)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
@@ -14,13 +15,17 @@ type alias Y = Float
 
 render : Width -> Height -> Values -> Svg a
 render graphWidth graphHeight values =
-  svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
-    [ Svg.path
-        [ strokeWidth "1"
-        , fill "none"
-        , d ( getPath values graphWidth graphHeight )
+  div [ class "graph" ]
+    [ div [ class "line" ] [ text "25°" ]
+    , svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
+        [ Svg.path
+            [ strokeWidth "1"
+            , fill "none"
+            , d ( getPath values graphWidth graphHeight )
+            ]
+            []
         ]
-        []
+    , div [ class "line" ] [ text "15°" ]
     ]
 
 

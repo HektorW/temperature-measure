@@ -17,7 +17,7 @@ fetchLatest =
 
 fetchLatestUrl : String
 fetchLatestUrl =
-  "/api/temperature?count=10"
+  "/api/temperature?count=15"
 
 -- Decoders
 

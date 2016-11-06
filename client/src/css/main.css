@@ -2,6 +2,7 @@
 @import 'app.css';
 @import 'header.css';
 
+@import 'graph.css';
 @import 'style.css';
 
 @import 'Measurements/latest-temperature.css';
