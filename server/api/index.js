@@ -12,7 +12,7 @@ function* getTemperature() {
   )
 }
 
-function* noFlowThrough(next) {
+function* checkApi404(next) {
   const apiRegex = /^\/api/i
   if (apiRegex.test(this.path) !== true) {
     yield next
@@ -27,6 +27,6 @@ module.exports.createRoute = function createRoute() {
   return compose([
     router.routes(),
     router.allowedMethods(),
-    noFlowThrough,
+    checkApi404,
   ])
 }

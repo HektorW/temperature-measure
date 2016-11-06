@@ -1,0 +1,12 @@
+{
+  "apps": [{
+    "name": "temperature",
+    "script": "./index.js",
+    "watch": false,
+    "autorestart": true,
+    "env": {
+      "NODE_ENV": "production",
+      "location": ""
+    }
+  }]
+}
