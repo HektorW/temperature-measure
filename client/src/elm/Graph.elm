@@ -59,7 +59,15 @@ valueX index lineWidth =
 valueY : Value -> Height -> Y
 valueY value height =
   let
-    minY = 15
+    minY = 18
     maxY = 25
   in
     ( toFloat height ) / ( maxY - minY ) * ( maxY - value )
+
+minValue : Values -> Value
+minValue values =
+  List.foldr (\a b -> if a < b then a else b) 30 values
+
+maxValue : Values -> Value
+maxValue values =
+  List.foldr (\a b -> if a > b then a else b) 10 values
