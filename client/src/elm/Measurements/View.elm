@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Date.Extra.Config.Config_en_gb exposing (config)
 import Date.Extra.Format exposing (format)
+import Exts.Float exposing (roundTo)
 
 view : MeasurementsModel -> Html Msg
 view model =
@@ -28,16 +29,23 @@ latestDateString model =
         ""
 
 
-latestTemperatureString : MeasurementsModel -> String
-latestTemperatureString model =
+latestTemperature : MeasurementsModel -> Float
+latestTemperature model =
   let
     latest = latestMeasurement model
   in
     case latest of
       Just measurement ->
-        toString ( roundTo 1 measurement.temperature )
+        measurement.temperature
       Nothing ->
-        "-"
+        0.0
+
+
+latestTemperatureString : MeasurementsModel -> String
+latestTemperatureString model =
+  latestTemperature model
+    |> oneDecimal
+    |> toString
 
 
 latestMeasurement : MeasurementsModel -> Maybe Measurement
@@ -45,7 +53,5 @@ latestMeasurement model =
   List.head model.measurements
 
 
-roundTo : Int -> Float -> Float
-roundTo places =
-  let factor = 10 ^ places
-  in (*) factor >> round >> toFloat >> (\n -> n / factor)
+oneDecimal : Float -> Float
+oneDecimal = roundTo 1
