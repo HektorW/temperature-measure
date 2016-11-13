@@ -13,42 +13,62 @@ type alias LineWidth = Float
 type alias X = Float
 type alias Y = Float
 
+
+type alias GraphConfig =
+  { minValue : Value
+  , maxValue : Value
+  , lineWidth : LineWidth
+  , width : Width
+  , height : Height
+  }
+
+
 render : Width -> Height -> Values -> Svg a
 render graphWidth graphHeight values =
-  div [ class "graph" ]
-    [ div [ class "line" ] [ text "25°" ]
-    , svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
-        [ Svg.path
-            [ strokeWidth "1"
-            , fill "none"
-            , d ( getPath values graphWidth graphHeight )
-            ]
-            []
-        ]
-    , div [ class "line" ] [ text "15°" ]
-    ]
-
-
-getPath : Values -> Width -> Height -> String
-getPath values width height =
   let
-    lineWidth = ( toFloat width ) / ( toFloat ( ( List.length values ) - 1 ) )
+    config =
+      { minValue = minValue values
+      , maxValue = maxValue values
+      , lineWidth = lineWidth values graphWidth
+      , width = graphWidth
+      , height = graphHeight
+      }
   in
-    values
-      |> List.indexedMap (\index value -> ( pathForValue index value lineWidth height ))
-      |> List.foldr ( \a b -> a ++ " " ++ b ) ""
+    div [ class "graph" ]
+      [ div [ class "line" ] [ text <| ( toString config.maxValue ) ++ "°" ]
+      , svg [ viewBox ( "0 0 " ++ ( toString graphWidth ) ++ " " ++ ( toString graphHeight ) ) ]
+          [ Svg.path
+              [ strokeWidth "1"
+              , fill "none"
+              , d ( getPath values config )
+              ]
+              []
+          ]
+      , div [ class "line" ] [ text <| ( toString config.minValue ) ++ "°" ]
+      ]
 
 
+getPath : Values -> GraphConfig -> String
+getPath values config =
+  values
+    |> List.indexedMap (\index value -> ( pathForValue value index config ))
+    |> List.foldr ( \a b -> a ++ " " ++ b ) ""
 
-pathForValue : Index -> Value -> LineWidth -> Height -> String
-pathForValue index value lineWidth height =
+
+pathForValue : Value -> Index -> GraphConfig -> String
+pathForValue value index config =
   let
-    y = valueY value height
+    y = valueY value config
   in
     if index == 0 then
       "M0 " ++ toString ( y )
     else
-      "L" ++ ( toString ( valueX index lineWidth ) ) ++ " " ++ toString y
+      "L" ++ ( toString ( valueX index config.lineWidth ) ) ++ " " ++ toString y
+
+
+lineWidth : Values -> Width -> LineWidth
+lineWidth values width =
+  ( toFloat width ) / ( toFloat ( ( List.length values ) - 1 ) )
 
 
 valueX : Index -> LineWidth -> X
@@ -56,18 +76,35 @@ valueX index lineWidth =
   ( toFloat index ) * lineWidth
 
 
-valueY : Value -> Height -> Y
-valueY value height =
+valueY : Value -> GraphConfig -> Y
+valueY value config =
   let
-    minY = 18
-    maxY = 25
+    height = config.height
+    minY = config.minValue
+    maxY = config.maxValue
   in
     ( toFloat height ) / ( maxY - minY ) * ( maxY - value )
 
+
 minValue : Values -> Value
 minValue values =
-  List.foldr (\a b -> if a < b then a else b) 30 values
+  let
+    min = List.minimum values
+  in
+    case min of
+      Just value ->
+        value |> floor |> toFloat
+      Nothing ->
+        15
+
 
 maxValue : Values -> Value
 maxValue values =
-  List.foldr (\a b -> if a > b then a else b) 10 values
+  let
+    max = List.maximum values
+  in
+    case max of
+      Just value ->
+        value |> (+) 1 |> floor |> toFloat
+      Nothing ->
+        25
