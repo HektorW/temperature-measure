@@ -10,7 +10,8 @@
     "koa-compose": "^2.5.1",
     "koa-router": "^5.4.0",
     "koa-static": "^2.0.0",
-    "mz": "^2.4.0"
+    "mz": "^2.4.0",
+    "sqlite3": "^3.1.8"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",

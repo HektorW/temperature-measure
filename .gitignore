@@ -5,3 +5,4 @@ jsconfig.json
 .vscode
 elm-stuff/
 client/dist/
+*.sqlite3
