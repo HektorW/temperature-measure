@@ -1,14 +1,17 @@
 module Style.Models exposing (..)
 
+
 type Style
-  = Light
-  | Dark
+    = Light
+    | Dark
+
 
 type alias StyleModel =
-  { style : Style
-  }
+    { style : Style
+    }
+
 
 initialStyleModel : StyleModel
 initialStyleModel =
-  { style = Light
-  }
+    { style = Light
+    }

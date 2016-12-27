@@ -4,9 +4,9 @@ import Style.Messages exposing (..)
 import Time
 import Task
 
+
 checkCurrentTime : Cmd Msg
 checkCurrentTime =
-  Time.now
-    |> Task.perform
-      ( \_ -> Debug.crash "" )
-      SetStyleBasedOnTime
+    Time.now
+        |> Task.perform
+            SetStyleBasedOnTime

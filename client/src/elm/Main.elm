@@ -6,33 +6,32 @@ import Update exposing (..)
 import View exposing (..)
 import Measurements.Commands exposing (fetchLatest)
 import Style.Commands exposing (checkCurrentTime)
-
-import Html.App as App
+import Html
 
 
 init : ( Model, Cmd Msg )
 init =
-  ( initialModel, initialCommands )
+    ( initialModel, initialCommands )
 
 
 initialCommands : Cmd Msg
 initialCommands =
-  Cmd.batch
-    [ Cmd.map MeasurementsMsg fetchLatest
-    , Cmd.map StyleMsg checkCurrentTime
-    ]
+    Cmd.batch
+        [ Cmd.map MeasurementsMsg fetchLatest
+        , Cmd.map StyleMsg checkCurrentTime
+        ]
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+    Sub.none
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-  App.program
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    }
+    Html.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }

@@ -2,37 +2,36 @@ module Measurements.Commands exposing (..)
 
 import Measurements.Messages exposing (..)
 import Measurements.Models exposing (..)
-
 import Http
 import Task
-import Date exposing (Date, fromString)
-import Json.Decode as Decode exposing ((:=), andThen)
+import Json.Decode as Decode exposing (field)
+import Json.Decode.Extra
 
 
 fetchLatest : Cmd Msg
 fetchLatest =
-  Http.get collectionDecoder fetchLatestUrl
-   |> Task.perform FetchLatestError FetchLatestSuccess
+    Http.get fetchLatestUrl collectionDecoder
+        |> Http.toTask
+        |> Task.attempt FetchLatest
 
 
 fetchLatestUrl : String
 fetchLatestUrl =
-  "/api/temperature?count=15"
+    "/api/temperature?count=15"
+
+
 
 -- Decoders
 
+
 collectionDecoder : Decode.Decoder (List Measurement)
 collectionDecoder =
-  Decode.list measurementDecoder
+    Decode.list measurementDecoder
 
 
 measurementDecoder : Decode.Decoder Measurement
 measurementDecoder =
-  Decode.object3 Measurement
-    ("temperature" := Decode.float)
-    ("time" := dateDecoder)
-    ("location" := Decode.string)
-
-
-dateDecoder : Decode.Decoder Date
-dateDecoder = Decode.customDecoder Decode.string Date.fromString
+    Decode.map3 Measurement
+        (field "temperature" Decode.float)
+        (field "time" Json.Decode.Extra.date)
+        (field "location" Decode.string)

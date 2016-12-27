@@ -6,6 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
+
 view : StyleModel -> Html Msg
 view model =
-  button [ class "style", onClick ToggleStyle ] []
+    button [ class "style", onClick ToggleStyle ] []
