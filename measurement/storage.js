@@ -1,7 +1,6 @@
 const { appendFile, readFile, stat } = require('mz/fs')
 const { createReadStream } = require('fs')
 const { join } = require('path')
-const co = require('co')
 const log = require('../log')('measurement/storage')
 
 const outputFile = join(__dirname, 'temperature.log')
@@ -30,14 +29,14 @@ function write(output) {
 // }
 
 
-function* readLarge(count = 1) {
-  const stats = yield stat(outputFile)
+async function readLarge(count = 1) {
+  const stats = await stat(outputFile)
   const fileSize = stats.size
 
   const approxItemSize = 200
   const readSize = approxItemSize * count
   const startRead = fileSize - readSize
-  const fileContent = yield readPartialFile(outputFile, startRead)
+  const fileContent = await readPartialFile(outputFile, startRead)
 
   const entries = fileContent.split(/\n/g)
   const selectedEntries = entries
@@ -61,5 +60,5 @@ function readPartialFile(path, start) {
 module.exports = {
   write,
   // read,
-  read: co.wrap(readLarge),
+  read: readLarge,
 }

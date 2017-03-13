@@ -1,6 +1,5 @@
 const { readFile } = require('mz/fs')
 const { join } = require('path')
-const co = require('co')
 const { mockSensor } = require('../config')
 
 const dir = '/sys/bus/w1/devices'
@@ -19,10 +18,8 @@ function parseTemperature(rawOutput = '') {
   return parseFloat(withDot)
 }
 
-function getRawOutput() {
-  return co(function* () {
-    return yield readFile(readPath, 'utf8')
-  })
+async function getRawOutput() {
+  return await readFile(readPath, 'utf8')
 }
 
 function getTemperature() {

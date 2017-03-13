@@ -1,8 +1,8 @@
-const koa = require('koa')
+const Koa = require('koa')
 const api = require('./api')
 const client = require('./client')
 
-const app = koa()
+const app = new Koa()
 
 app.use(api.createRoute())
 app.use(client.createRoute())

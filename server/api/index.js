@@ -2,20 +2,20 @@ const koaRouter = require('koa-router')
 const compose = require('koa-compose')
 const { read } = require('../../measurement/storage')
 
-function* getTemperature() {
-  const { query } = this
+async function getTemperature(ctx) {
+  const { query } = ctx
   const count = query.count || 1
   const start = query.start || 0
-  const entries = yield read(count, start)
-  this.body = entries.map(
+  const entries = await read(count, start)
+  ctx.body = entries.map(
     ({ time, temperature, location }) => ({ time, temperature, location })
   )
 }
 
-function* checkApi404(next) {
+async function checkApi404(ctx, next) {
   const apiRegex = /^\/api/i
-  if (apiRegex.test(this.path) !== true) {
-    yield next
+  if (apiRegex.test(ctx.path) !== true) {
+    await next
   }
 }
 
