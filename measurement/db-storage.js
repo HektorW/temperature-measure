@@ -1,6 +1,6 @@
 const { join } = require('path')
 const { Database } = require('sqlite3')
-const log = require('../log')('measurement/db-storage')
+const log = require('../log')(__filename)
 
 const dbFile = join(__dirname, 'measurements.sqlite3')
 const tableName = 'measurements'

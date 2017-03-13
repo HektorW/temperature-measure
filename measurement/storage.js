@@ -1,7 +1,7 @@
 const { appendFile, readFile, stat } = require('mz/fs')
 const { createReadStream } = require('fs')
 const { join } = require('path')
-const log = require('../log')('measurement/storage')
+const log = require('../log')(__filename)
 
 const outputFile = join(__dirname, 'temperature.log')
 
