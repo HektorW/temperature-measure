@@ -7,4 +7,9 @@ const log = require('./log')('root')
 log.info({ config, env }, 'Booting app')
 
 server.listen(config.port, () => log.info({ port: config.port }, 'Server started!'))
+
 measurement.start(config.measurementInterval)
+  .catch(error => {
+    log.error(error, 'Failed to initialize measurement')
+    process.exit(1)
+  })

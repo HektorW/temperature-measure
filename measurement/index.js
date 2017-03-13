@@ -10,6 +10,6 @@ async function sample() {
 
 module.exports.start = async function start(measurementInterval) {
   await initialize()
-  sample()
+  await sample()
   setInterval(sample, measurementInterval)
 }
