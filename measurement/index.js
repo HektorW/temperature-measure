@@ -1,5 +1,5 @@
 const { getRawOutput, parseTemperature } = require('./sensor')
-const { write } = require('./storage')
+const { initialize, write } = require('./db-storage')
 const { sensorLocation: location } = require('../config')
 
 async function sample() {
@@ -8,7 +8,8 @@ async function sample() {
   write({ rawOutput, temperature, location })
 }
 
-module.exports.start = function start(measurementInterval) {
+module.exports.start = async function start(measurementInterval) {
+  await initialize()
   sample()
   setInterval(sample, measurementInterval)
 }
